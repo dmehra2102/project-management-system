@@ -1,0 +1,34 @@
+{
+  "name": "project-management-system",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon"
+  },
+  "keywords": [],
+  "author": "dmehra2102",
+  "license": "ISC",
+  "description": "Project Managemenet System",
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.25",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.2.1",
+    "@types/pg": "^8.15.5",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.39.1",
+    "@typescript-eslint/parser": "^8.39.1",
+    "cross-env": "^10.0.0",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
