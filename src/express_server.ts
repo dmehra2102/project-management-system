@@ -1,3 +1,4 @@
+import { Routes } from "./utils/route";
 import { DatabaseUtil } from "./utils/db";
 import { createServer, Server } from "http";
 import express, { Application } from "express";
@@ -9,11 +10,12 @@ export class ExpressServer {
   private server: Server | null = null;
   public server_config: IServerConfig = config;
 
-  constructor() {
+  constructor(routes: Routes[]) {
     this.app = express();
 
     this.setupMiddleware();
     this.connectToDatabase();
+    this.initializeRoutes(routes);
   }
 
   private connectToDatabase() {
@@ -22,6 +24,12 @@ export class ExpressServer {
 
   private setupMiddleware(): void {
     this.app.use(express.json());
+  }
+
+  private initializeRoutes(routes: Routes[]) {
+    routes.forEach((route) => {
+      this.app.use("/", route.router);
+    });
   }
 
   public start(): void {

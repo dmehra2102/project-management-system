@@ -1,7 +1,8 @@
 import cluster from "cluster";
 import { ExpressServer } from "./express_server";
+import { RoleRoutes } from "./routes";
 
-const server = new ExpressServer();
+const server = new ExpressServer([new RoleRoutes()]);
 
 server.start();
 
