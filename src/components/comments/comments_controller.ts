@@ -1,4 +1,4 @@
-export class TasksController {
+export class CommentController {
   public addHandler() {}
   public getAllHandler() {}
   public getDetailsHandler() {}
