@@ -1,4 +1,4 @@
-import { DataSource } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import { IServerConfig } from "./config";
 import * as config from "../../server_config.json";
 import { Tasks } from "./../components/tasks/tasks_entity";
@@ -8,7 +8,10 @@ import { Comments } from "./../components/comments/comments_entity";
 import { Projects } from "./../components/projects/projects_entity";
 
 export class DatabaseUtil {
+  private static instance: DatabaseUtil;
   public server_config: IServerConfig = config;
+  private static connection: DataSource | null = null;
+  private repositories: Record<string, Repository<any>> = {};
 
   constructor() {
     this.connectDatabase();
@@ -30,9 +33,38 @@ export class DatabaseUtil {
       });
 
       await AppDataSource.initialize();
+      DatabaseUtil.connection = AppDataSource;
       console.log("Connected to the database");
+      return DatabaseUtil.connection;
     } catch (error) {
       console.error("Error connecting to the database:", error);
+    }
+  }
+
+  public static async getInstance(): Promise<DatabaseUtil> {
+    if (!DatabaseUtil.instance) {
+      DatabaseUtil.instance = new DatabaseUtil();
+      await DatabaseUtil.instance.connectDatabase();
+    }
+
+    return DatabaseUtil.instance;
+  }
+
+  public getRepository(entity) {
+    try {
+      if (DatabaseUtil.connection) {
+        const entityName = entity.name;
+
+        if (!this.repositories[entityName]) {
+          this.repositories[entityName] =
+            DatabaseUtil.connection.getRepository(entity);
+        }
+
+        return this.repositories[entityName];
+      }
+      return null;
+    } catch (error) {
+      console.error(`Error while getRepository => ${error.message}`);
     }
   }
 }
