@@ -126,7 +126,7 @@ export class BaseService<T> {
     try {
       let data = [];
       if (Object.keys(queryParams).length > 0) {
-        const query = await this.repository.createQueryBuilder();
+        const query = this.repository.createQueryBuilder();
         for (const field in queryParams) {
           if (queryParams.hasOwnProperty(field)) {
             const value = queryParams[field];
